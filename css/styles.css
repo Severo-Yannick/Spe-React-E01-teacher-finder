@@ -5,6 +5,7 @@
   --select: #eee;
   --border: #bbb;
   --white: #fff;
+  --teacher-speciality:#569ff3;
 }
 
 * {
@@ -48,12 +49,16 @@ body {
   border-radius: 4px;
 }
 
-.teacher__base {
+.teacher__base, .teacher__speciality {
   background-color: var(--tags);
   padding: 0.5rem;
   margin-left: 0.5rem;
   font-size: 0.75em;
   border-radius: 4px;
+}
+
+.teacher__speciality {
+  background-color: var(--teacher-speciality);
 }
 
 .hidden {

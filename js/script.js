@@ -75,7 +75,32 @@ const app = {
     // On ne doit pas oublier de mettre à jour le compteur
     app.counterContainer.textContent = app.getTitle(counter);
   },
-  handleSpecialityChange(event) {},
+  handleSpecialityChange(event) {
+    // Valeur qu'on vient de selectionner
+    const specialityValue = event.target.value;
+    // Les éléments profs à filter ou pas
+    const teacherElements = document.querySelectorAll(".teacher");
+
+    let counter = 0;
+    teacherElements.forEach((teacherElement) => {
+      // Lecture du DOM afin de savoir si la valeur cherchée est la bonne
+      const teacherSpeciality = teacherElement.querySelector(
+        ".teacher__speciality"
+      );
+      // Si oui on décrit comment impacter le dom
+      if (teacherSpeciality.textContent === specialityValue) {
+        // On incrément le compteur à chaque fois qu'on veut afficher un professeur
+        counter++;
+        // Affichage de l'élément
+        teacherElement.classList.remove("hidden");
+      } else {
+        // Cache de l'élément
+        teacherElement.classList.add("hidden");
+      }
+    });
+    // Mise à jour du compteur
+    app.counterContainer.textContent = app.getTitle(counter);
+  },
   // Création du formulaire
   createForm() {
     const form = app.configureElement("form", app.appContainer, {
@@ -116,7 +141,7 @@ const app = {
         value: speciality,
       });
     });
-    
+
     selectBase.addEventListener("change", app.handleBaseChange);
     selectSpecialities.addEventListener("change", app.handleSpecialityChange);
   },
@@ -153,6 +178,10 @@ const app = {
       app.configureElement("span", li, {
         className: "teacher__base",
         textContent: teacher.base,
+      });
+      app.configureElement("span", li, {
+        className: "teacher__speciality",
+        textContent: teacher.speciality,
       });
     });
 
