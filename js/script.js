@@ -49,6 +49,33 @@ const app = {
     app.createCounter();
     app.createList();
   },
+  handleBaseChange(event) {
+    // La valeur qu'on vient de selectionner
+    const baseValue = event.target.value;
+    // Tous les éléments profs à filter ou pas
+    const teacherElements = document.querySelectorAll(".teacher");
+
+    // Pour chaque prof de la liste
+    // On déclare un compteur pour mettre à jour le compteur
+    let counter = 0;
+    teacherElements.forEach((teacherElement) => {
+      // on lit le DOM pour savoir si c'est la valeur qu'on cherche
+      const teacherBase = teacherElement.querySelector(".teacher__base");
+      // Si oui on décrit comment impacter le dom
+      if (teacherBase.textContent === baseValue) {
+        // On incrément le compteur à chaque fois qu'on veut afficher un professeur
+        counter++;
+        // On affiche l'élément
+        teacherElement.classList.remove("hidden");
+      } else {
+        // On cache l'élément
+        teacherElement.classList.add("hidden");
+      }
+    });
+    // On ne doit pas oublier de mettre à jour le compteur
+    app.counterContainer.textContent = app.getTitle(counter);
+  },
+  handleSpecialityChange(event) {},
   // Création du formulaire
   createForm() {
     const form = app.configureElement("form", app.appContainer, {
@@ -89,6 +116,9 @@ const app = {
         value: speciality,
       });
     });
+    
+    selectBase.addEventListener("change", app.handleBaseChange);
+    selectSpecialities.addEventListener("change", app.handleSpecialityChange);
   },
   // Création du conteur des profs
   createCounter() {
